@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbhjybfops8kf"]
+
+[ext_resource type="Script" uid="uid://d07665irldnxb" path="res://scripts/Vampire.gd" id="1_p1qrv"]
+[ext_resource type="ArrayMesh" uid="uid://cfmugkpjf64yq" path="res://assets/Prop_Lollipop.obj" id="2_bcoqh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3ilhw"]
+radius = 0.07470703
+height = 1.9106445
+
+[node name="Vampire" type="Node3D"]
+script = ExtResource("1_p1qrv")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64179647, 0)
+shape = SubResource("CapsuleShape3D_3ilhw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_bcoqh")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

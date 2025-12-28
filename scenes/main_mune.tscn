@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgjlaq2t0d2kr"]
+
+[ext_resource type="Texture2D" uid="uid://dtqrxolwdecbe" path="res://sprites/تصميم بدون عنوان (3).png" id="1_gcdk6"]
+[ext_resource type="Script" uid="uid://deeo7pjif05x5" path="res://scripts/main_mune.tres.gd" id="1_rgmbd"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_182p5"]
+texture = ExtResource("1_gcdk6")
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rgmbd")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 717.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_182p5")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 26.0
+offset_right = 945.0
+offset_bottom = 109.0
+theme_override_font_sizes/font_size = 60
+text = "𝐸𝑆𝐶𝐴𝑃𝐸𝑋"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 429.0
+offset_top = 398.0
+offset_right = 833.0
+offset_bottom = 456.0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "START"
+flat = true
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 418.0
+offset_top = 480.0
+offset_right = 854.0
+offset_bottom = 534.0
+theme_override_font_sizes/font_size = 30
+text = "How To Play "
+flat = true
+
+[node name="Button3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 432.0
+offset_top = 560.0
+offset_right = 832.0
+offset_bottom = 612.0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Quit"
+flat = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]

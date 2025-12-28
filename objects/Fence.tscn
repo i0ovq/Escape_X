@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c15kj3lt3wfke"]
+
+[ext_resource type="PackedScene" uid="uid://brbenennu86il" path="res://rondom/Fence Post Connecting (5 Long).fbx" id="1_smlmm"]
+[ext_resource type="PackedScene" uid="uid://fd0kuw2fu5de" path="res://rondom/Fence Post.fbx" id="2_s2tjc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lg6yt"]
+size = Vector3(0.031692505, 0.10304642, 0.47712135)
+
+[node name="Fence" type="Node3D"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.09303842, 0.093552016, 0.12086236)
+shape = SubResource("BoxShape3D_lg6yt")
+
+[node name="Fence Post Connecting (5 Long)" parent="." instance=ExtResource("1_smlmm")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, -0.09497198, 0.010910523, 0.09787559)
+
+[node name="Fence Post" parent="." instance=ExtResource("2_s2tjc")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, -0.09189866, 0.016827786, 0.4562502)
