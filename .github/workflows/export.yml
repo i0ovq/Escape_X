@@ -40,18 +40,29 @@ jobs:
         if: steps.cache-godot.outputs.cache-hit != 'true'
         run: |
           mkdir -p build && cd build
+
+          # Download Godot Engine itself
           wget --progress=dot:giga https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip && \
           unzip Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip && \
           mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 godot
+
+          # Download export templates
           mkdir -p editor_data/export_templates
           wget --progress=dot:giga https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz && \
           unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz && \
           mv templates editor_data/export_templates/${GODOT_VERSION}.stable
+
+          # Tell Godot Engine to run in "self-contained" mode so it looks for
+          # templates here instead of in ~/.local/share/godot/
           touch ._sc_
 
       - name: Export web release
         run: |
           mkdir -v -p build/web && cd build
+
+          # Note that the export path can be confusing; it's relative to the
+          # Godot project path, NOT necessarily the current directory or Godot
+          # binary location
           ./godot --headless --verbose --path ../ --export-release "Web" ./build/web/index.html
 
       - name: Upload web artifact
@@ -63,14 +74,11 @@ jobs:
   release:
     name: Attach to release
     needs: [build]
-    # التعديل هنا: السماح بالعمل عند الرفع اليدوي أو إصدار نسخة جديدة
-    if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
+    if: ${{ github.event_name == 'release' }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # إضافة صلاحية الكتابة لرفع الملفات إلى الـ Release
     steps:
       - name: Download web bundle
-        uses: actions/download-artifact@v5 # تم تحديث الإصدار ليتوافق مع v5
+        uses: actions/download-artifact@v6
         with:
           name: web
           path: web
@@ -82,5 +90,5 @@ jobs:
           pushd web
           zip -r "../moddable-platformer-${{ github.ref_name }}-web.zip" .
           popd
-          # ملاحظة: سيحاول الرفع إلى Release يحمل اسم الفرع الحالي (مثل main)
-          gh release upload '${{ github.ref_name }}' 'moddable-platformer-${{ github.ref_name }}-web.zip' --repo '${{ github.repository }}' --clobber
+
+          gh release upload '${{ github.ref_name }}' 'moddable-platformer-${{ github.ref_name }}-web.zip' --repo '${{ github.repository }}'
